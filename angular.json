@@ -2,12 +2,17 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "packages",
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "projects": {
     "zero": {
       "root": "packages/zero",
       "sourceRoot": "packages/zero/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "zo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -27,13 +32,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "packages/zero/tsconfig.lib.json",
-              "packages/zero/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["packages/zero/tsconfig.lib.json", "packages/zero/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -43,7 +43,6 @@
       "sourceRoot": "packages/demo/src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -53,13 +52,8 @@
             "main": "packages/demo/src/main.ts",
             "polyfills": "packages/demo/src/polyfills.ts",
             "tsConfig": "packages/demo/tsconfig.app.json",
-            "assets": [
-              "packages/demo/src/favicon.ico",
-              "packages/demo/src/assets"
-            ],
-            "styles": [
-              "packages/demo/src/styles.css"
-            ],
+            "assets": ["packages/demo/src/favicon.ico", "packages/demo/src/assets"],
+            "styles": ["packages/demo/src/styles.scss"],
             "scripts": [],
             "es5BrowserSupport": true
           },
@@ -114,26 +108,16 @@
             "polyfills": "packages/demo/src/polyfills.ts",
             "tsConfig": "packages/demo/tsconfig.spec.json",
             "karmaConfig": "packages/demo/karma.conf.js",
-            "styles": [
-              "packages/demo/src/styles.css"
-            ],
+            "styles": ["packages/demo/src/styles.scss"],
             "scripts": [],
-            "assets": [
-              "packages/demo/src/favicon.ico",
-              "packages/demo/src/assets"
-            ]
+            "assets": ["packages/demo/src/favicon.ico", "packages/demo/src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "packages/demo/tsconfig.app.json",
-              "packages/demo/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["packages/demo/tsconfig.app.json", "packages/demo/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -159,9 +143,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": "packages/demo-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

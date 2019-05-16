@@ -1,33 +1,64 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "packages",
   "projects": {
-    "ngx-zero": {
-      "root": "",
-      "sourceRoot": "src",
+    "zero": {
+      "root": "packages/zero",
+      "sourceRoot": "packages/zero/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "packages/zero/tsconfig.lib.json",
+            "project": "packages/zero/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/zero/src/test.ts",
+            "tsConfig": "packages/zero/tsconfig.spec.json",
+            "karmaConfig": "packages/zero/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/zero/tsconfig.lib.json",
+              "packages/zero/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "demo": {
+      "root": "packages/demo/",
+      "sourceRoot": "packages/demo/src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-zero",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "outputPath": "dist/demo",
+            "index": "packages/demo/src/index.html",
+            "main": "packages/demo/src/main.ts",
+            "polyfills": "packages/demo/src/polyfills.ts",
+            "tsConfig": "packages/demo/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "packages/demo/src/favicon.ico",
+              "packages/demo/src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "packages/demo/src/styles.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -36,8 +67,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "packages/demo/src/environments/environment.ts",
+                  "with": "packages/demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -62,34 +93,34 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-zero:build"
+            "browserTarget": "demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-zero:build:production"
+              "browserTarget": "demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-zero:build"
+            "browserTarget": "demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "main": "packages/demo/src/test.ts",
+            "polyfills": "packages/demo/src/polyfills.ts",
+            "tsConfig": "packages/demo/tsconfig.spec.json",
+            "karmaConfig": "packages/demo/karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "packages/demo/src/styles.css"
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "packages/demo/src/favicon.ico",
+              "packages/demo/src/assets"
             ]
           }
         },
@@ -97,8 +128,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "packages/demo/tsconfig.app.json",
+              "packages/demo/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -107,27 +138,27 @@
         }
       }
     },
-    "ngx-zero-e2e": {
-      "root": "e2e/",
+    "demo-e2e": {
+      "root": "packages/demo-e2e/",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-zero:serve"
+            "protractorConfig": "packages/demo-e2e/protractor.conf.js",
+            "devServerTarget": "demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-zero:serve:production"
+              "devServerTarget": "demo:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
+            "tsConfig": "packages/demo-e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -136,5 +167,5 @@
       }
     }
   },
-  "defaultProject": "ngx-zero"
+  "defaultProject": "demo"
 }
